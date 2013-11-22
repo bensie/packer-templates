@@ -1,0 +1,17 @@
+{
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "xxx",
+    "secret_key": "xxx",
+    "region": "us-east-1",
+    "source_ami": "ami-d9a98cb0",
+    "instance_type": "m1.large",
+    "ssh_username": "ubuntu",
+    "ami_name": "machines-webserver {{timestamp}}"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "script": "scripts/bootstrap.sh",
+    "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E '{{ .Path }}'"
+  }]
+}
