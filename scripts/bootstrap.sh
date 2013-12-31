@@ -81,8 +81,3 @@ echo 'data_bag_path "/home/ubuntu/chef-solo/data_bags"' >> /etc/chef/solo.rb
 echo 'cookbook_path ["/home/ubuntu/chef-solo/cookbooks", "/home/ubuntu/chef-solo/custom-cookbooks"]' >> /etc/chef/solo.rb
 echo 'json_attribs "/home/ubuntu/chef-solo/node.json"' >> /etc/chef/solo.rb
 echo 'log_location "/var/log/chef/solo.log"' >> /etc/chef/solo.rb
-
-# reboot
-echo "Rebooting the machine..."
-reboot
-sleep 60

@@ -10,14 +10,21 @@
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-east-1",
     "source_ami": "ami-0568456c",
-    "instance_type": "m1.large",
+    "instance_type": "c3.xlarge",
     "ssh_username": "ubuntu",
     "ami_name": "machines-webserver {{timestamp}}"
   }],
 
-  "provisioners": [{
-    "type": "shell",
-    "script": "scripts/bootstrap.sh",
-    "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E '{{ .Path }}'"
-  }]
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "scripts/bootstrap.sh",
+      "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E '{{ .Path }}'"
+    },
+    {
+      "type": "shell",
+      "script": "scripts/reboot.sh",
+      "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E '{{ .Path }}'"
+    }
+  ]
 }
