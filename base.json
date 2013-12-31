@@ -1,14 +1,20 @@
 {
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
+  },
+
   "builders": [{
     "type": "amazon-ebs",
-    "access_key": "xxx",
-    "secret_key": "xxx",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-east-1",
-    "source_ami": "ami-d9a98cb0",
+    "source_ami": "ami-0568456c",
     "instance_type": "m1.large",
     "ssh_username": "ubuntu",
     "ami_name": "machines-webserver {{timestamp}}"
   }],
+
   "provisioners": [{
     "type": "shell",
     "script": "scripts/bootstrap.sh",

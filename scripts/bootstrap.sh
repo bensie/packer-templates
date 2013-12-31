@@ -18,7 +18,7 @@ dpkg-reconfigure --frontend noninteractive tzdata
 
 # Install Rbenv
 git clone git://github.com/sstephenson/rbenv.git /usr/local/rbenv
-cd /usr/local/rbenv && git reset --hard 95a039aaaa3855ea2df4855ad38c06faaba01f9a
+cd /usr/local/rbenv && git reset --hard 783618b89cb80b74f1daf03679081dd1233f49eb
 
 # Install rbenv-vars
 mkdir -p /usr/local/rbenv/plugins
@@ -38,20 +38,20 @@ echo 'Defaults !secure_path' >> /etc/sudoers
 mkdir /opt/rubies
 
 pushd /opt/rubies
-  curl -O http://packages.machines.io/rubies/1.9.3-p484.tgz
-  tar zxf 1.9.3-p484.tgz
+  curl -O http://packages.machines.io/rubies/2.0.0-p353.tgz
+  tar zxf 2.0.0-p353.tgz
 popd
 
 rm -rf /usr/local/rbenv/versions
 ln -nfs /opt/rubies /usr/local/rbenv/versions
 
-/opt/rubies/1.9.3-p448/bin/gem install chef --no-rdoc --no-ri -v 11.8.0
+/opt/rubies/2.0.0-p353/bin/gem install chef --no-rdoc --no-ri -v 11.8.2
 
-rbenv global 1.9.3-p484
+rbenv global 2.0.0-p353
 rbenv rehash
 
 ##
-# Install NodeJS
+# Install NodeJS for JS Runtime
 
 pushd /opt
   curl -O http://packages.machines.io/nodejs/node-v0.10.20.tgz
