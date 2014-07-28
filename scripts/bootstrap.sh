@@ -4,13 +4,14 @@ echo "Giving the OS enough time to initialize..."
 sleep 30
 
 echo "Installing base packages"
+
+# Enable multiverse
+perl -pi.orig -e 'next if /-backports/; s/^# (deb .* multiverse)$/$1/' /etc/apt/sources.list
+
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get -y upgrade
-apt-get install -y build-essential bison openssl libreadline6 libreadline6-dev curl wget git-core zlib1g zlib1g-dev libssl-dev libssl0.9.8 libcurl4-openssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev autoconf libc6-dev libncurses5-dev automake libtool imagemagick libmysqlclient-dev mysql-client openjdk-7-jdk pkg-config mdadm libpcre3 libpcre3-dev gdb
-
-echo "Installing the backported kernel"
-apt-get install -y linux-image-generic-lts-raring linux-headers-generic-lts-raring
+apt-get install -y build-essential bison openssl libreadline6 libreadline6-dev curl wget git-core zlib1g zlib1g-dev libssl-dev libssl0.9.8 libcurl4-openssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev autoconf libc6-dev libncurses5-dev automake libtool imagemagick libmysqlclient-dev mysql-client-5.6 openjdk-7-jdk pkg-config mdadm libpcre3 libpcre3-dev gdb nodejs ec2-api-tools ec2-ami-tools
 
 # Set timezone
 echo 'America/Los_Angeles' | tee /etc/timezone
@@ -38,46 +39,14 @@ echo 'Defaults !secure_path' >> /etc/sudoers
 mkdir /opt/rubies
 
 pushd /opt/rubies
-  curl -O http://packages.machines.io/rubies/2.0.0-p353.tgz
-  tar zxf 2.0.0-p353.tgz
+  curl -O http://packages.machines.io/rubies/2.1.2.tgz
+  tar zxf 2.1.2.tgz
 popd
 
 rm -rf /usr/local/rbenv/versions
 ln -nfs /opt/rubies /usr/local/rbenv/versions
 
-/opt/rubies/2.0.0-p353/bin/gem install chef --no-rdoc --no-ri -v 11.8.2
+/opt/rubies/2.1.2/bin/gem install bundler --no-rdoc --no-ri -v 1.6.5
 
-rbenv global 2.0.0-p353
+rbenv global 2.1.2
 rbenv rehash
-
-##
-# Install NodeJS for JS Runtime
-
-pushd /opt
-  curl -O http://packages.machines.io/nodejs/node-v0.10.20.tgz
-  tar zxvf node-v0.10.20.tgz
-  pushd node-v0.10.20
-    make install
-  popd
-  rm -rf node-v0.10.20
-  rm -f node-v0.10.20.tgz
-popd
-
-##
-# Configure Chef
-
-mkdir -p /etc/chef
-mkdir -p /var/log/chef
-
-mkdir -p /home/ubuntu/chef-solo/data_bags
-mkdir -p /home/ubuntu/chef-solo/cookbooks
-mkdir -p /home/ubuntu/chef-solo/custom-cookbooks
-chown -R ubuntu:ubuntu /home/ubuntu/chef-solo
-
-git clone git://github.com/machines/cookbooks.git /home/ubuntu/chef-solo/cookbooks
-
-echo 'file_cache_path "/home/ubuntu/chef-solo"' > /etc/chef/solo.rb
-echo 'data_bag_path "/home/ubuntu/chef-solo/data_bags"' >> /etc/chef/solo.rb
-echo 'cookbook_path ["/home/ubuntu/chef-solo/cookbooks", "/home/ubuntu/chef-solo/custom-cookbooks"]' >> /etc/chef/solo.rb
-echo 'json_attribs "/home/ubuntu/chef-solo/node.json"' >> /etc/chef/solo.rb
-echo 'log_location "/var/log/chef/solo.log"' >> /etc/chef/solo.rb

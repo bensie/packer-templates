@@ -1,0 +1,54 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
+  },
+
+  "builders": [{
+    "type": "amazon-instance",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "us-east-1",
+    "source_ami": "ami-e411d98c",
+    "instance_type": "c3.large",
+    "ssh_username": "ubuntu",
+    "ami_name": "web.generic.{{timestamp}}",
+    "s3_bucket": "packer-templates",
+    "x509_cert_path": "/Users/james/Dropbox/Packer-Certificates/packer.crt",
+    "x509_key_path": "/Users/james/Dropbox/Packer-Certificates/packer.key",
+    "x509_upload_path": "/tmp",
+    "account_id": "2349-6553-1241"
+  }],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "scripts/bootstrap.sh",
+      "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E '{{ .Path }}'"
+    },
+    {
+      "type": "shell",
+      "script": "scripts/nginx.sh",
+      "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E '{{ .Path }}'"
+    },
+    {
+      "type": "file",
+      "source": "config/nginx/nginx.conf",
+      "destination": "/tmp/nginx.conf"
+    },
+    {
+      "type": "file",
+      "source": "config/nginx/default-host.conf",
+      "destination": "/tmp/default-host.conf"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo mv /tmp/nginx.conf /etc/nginx/nginx.conf",
+        "sudo mv /tmp/default-host.conf /etc/nginx/default-host.conf",
+        "sudo chown root:root /etc/nginx/nginx.conf",
+        "sudo chown root:root /etc/nginx/default-host.conf"
+      ]
+    }
+  ]
+}
