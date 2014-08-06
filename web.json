@@ -42,12 +42,19 @@
       "destination": "/tmp/default-host.conf"
     },
     {
+      "type": "file",
+      "source": "config/nginx/default-host-index.html",
+      "destination": "/tmp/default-host-index.html"
+    },
+    {
       "type": "shell",
       "inline": [
         "sudo mv /tmp/nginx.conf /etc/nginx/nginx.conf",
         "sudo mv /tmp/default-host.conf /etc/nginx/default-host.conf",
+        "sudo mv /tmp/default-host-index.html /var/www/index.html",
         "sudo chown root:root /etc/nginx/nginx.conf",
         "sudo chown root:root /etc/nginx/default-host.conf"
+        "sudo chown root:root /var/www/index.html"
       ]
     }
   ]

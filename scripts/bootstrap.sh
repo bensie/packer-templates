@@ -39,6 +39,9 @@ mkdir /opt/rubies
 pushd /opt/rubies
   curl -O http://packages.machines.io/rubies/2.1.2.tgz
   tar zxf 2.1.2.tgz
+
+  curl -O http://packages.machines.io.s3.amazonaws.com/rubies/2.0.0-p481.tgz
+  tar zxf 2.0.0-p481.tgz
 popd
 
 rm -rf /usr/local/rbenv/versions
@@ -53,14 +56,4 @@ rbenv rehash
 adduser --disabled-password --gecos "" deploy
 
 # Add deploy user to sudo with no password
-$username=deploy
-echo "$username ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-
-# Copy SSH keys for authentication
-su $username -c "mkdir -p /home/$username/.ssh"
-su $username -c "touch /home/$username/.ssh/authorized_keys"
-(
-cat <<'EOP'
-ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAs8S3Nj3JhcKd6XxNyN99e+TJdA2S1BM8++pKYeTQZzH62ij8jAvClHMJB13Lt7XcLqmO3MoSSJ+cXotSmurT70xaKp5ScGL0cY/4oIswdjIxqttoIBQ1CgfBM2JvHvRA9WstnlOmVd3VOSGknHt4NqPou8e0nuJF++08EthzPF1k+Is4TP7ySGAy5XLUfpvzxEhqXqkKDPADCoLW/N09GjASlft8AyliatpAuoHgM0Hul+808uIDPHkwPT4Dp6Fwnk1oNY2iT2vk5wtJ+SoXcPHXMJH8NqNxMG4CA5cew9NZGlKOEwxhnu2V3iOWCjL+sOylWMatbfAuLSex0Ra7aw== bensie@gmail.com
-EOP
-) > /home/$username/.ssh/authorized_keys
+echo "deploy ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers

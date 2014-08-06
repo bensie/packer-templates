@@ -20,3 +20,12 @@ apt-get update
 
 # Install packages
 apt-get -y install nginx-extras passenger
+
+# Allow the deploy user to edit /etc/nginx/sites-enabled
+chown deploy:deploy /etc/nginx/sites-enabled
+
+# Remove the default virtualhost symlink
+rm /etc/nginx/sites-enabled/default
+
+# Make /var/www directory
+mkdir /var/www
