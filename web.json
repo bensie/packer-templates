@@ -53,7 +53,7 @@
         "sudo mv /tmp/default-host.conf /etc/nginx/default-host.conf",
         "sudo mv /tmp/default-host-index.html /var/www/index.html",
         "sudo chown root:root /etc/nginx/nginx.conf",
-        "sudo chown root:root /etc/nginx/default-host.conf"
+        "sudo chown root:root /etc/nginx/default-host.conf",
         "sudo chown root:root /var/www/index.html"
       ]
     }
