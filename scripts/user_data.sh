@@ -14,3 +14,7 @@ EOP
 # Add tmp dir in /mnt so it can grow big
 mkdir /mnt/tmp
 chmod 777 /mnt/tmp
+
+# Add apps dir in /mnt for application files
+mkdir /mnt/apps
+chown deploy:deploy /mnt/apps

@@ -37,11 +37,8 @@ echo 'Defaults !secure_path' >> /etc/sudoers
 mkdir /opt/rubies
 
 pushd /opt/rubies
-  curl -O http://packages.machines.io/rubies/2.1.2.tgz
+  curl -O http://packages.machines.io/rubies/trusty/2.1.2.tgz
   tar zxf 2.1.2.tgz
-
-  curl -O http://packages.machines.io.s3.amazonaws.com/rubies/2.0.0-p481.tgz
-  tar zxf 2.0.0-p481.tgz
 popd
 
 rm -rf /usr/local/rbenv/versions
