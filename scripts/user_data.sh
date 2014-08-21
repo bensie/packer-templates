@@ -18,6 +18,3 @@ chmod 777 /mnt/tmp
 # Add apps dir in /mnt for application files
 mkdir /mnt/apps
 chown deploy:deploy /mnt/apps
-
-# For some reason these are otherwise cleared
-update-ca-certificates
