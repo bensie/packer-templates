@@ -11,7 +11,44 @@ perl -pi.orig -e 'next if /-backports/; s/^# (deb .* multiverse)$/$1/' /etc/apt/
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get -y upgrade
-apt-get install -y build-essential bison openssl libreadline6 libreadline6-dev curl wget git-core zlib1g zlib1g-dev libssl-dev libssl0.9.8 libcurl4-openssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev autoconf libc6-dev libncurses5-dev automake libtool imagemagick libmysqlclient-dev mysql-client-5.6 openjdk-7-jdk pkg-config mdadm libpcre3 libpcre3-dev gdb nodejs ec2-api-tools ec2-ami-tools
+apt-get install -y \
+  autoconf \
+  automake \
+  build-essential \
+  bison \
+  curl \
+  ec2-api-tools \
+  ec2-ami-tools \
+  gdb \
+  git-core \
+  imagemagick \
+  libreadline6 \
+  libreadline6-dev \
+  libssl-dev \
+  libssl0.9.8 \
+  libcurl4-openssl-dev \
+  libyaml-dev \
+  libsqlite3-0 \
+  libsqlite3-dev \
+  libxml2-dev \
+  libxslt1-dev \
+  libpcre3 \
+  libpcre3-dev \
+  libc6-dev \
+  libncurses5-dev \
+  libtool \
+  libmysqlclient-dev \
+  mdadm \
+  mysql-client-5.6 \
+  nodejs \
+  openjdk-7-jdk \
+  openssl \
+  pkg-config \
+  redis-server \
+  sqlite3 \
+  wget \
+  zlib1g \
+  zlib1g-dev
 
 # Set timezone
 echo 'America/Los_Angeles' | tee /etc/timezone
