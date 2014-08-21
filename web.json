@@ -9,7 +9,7 @@
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-east-1",
-    "source_ami": "ami-e411d98c",
+    "source_ami": "ami-9ac11df2",
     "instance_type": "c3.large",
     "ssh_username": "ubuntu",
     "ami_name": "web.generic.{{timestamp}}",
@@ -17,7 +17,8 @@
     "x509_cert_path": "/Users/james/Dropbox/Packer-Certificates/packer.crt",
     "x509_key_path": "/Users/james/Dropbox/Packer-Certificates/packer.key",
     "x509_upload_path": "/tmp",
-    "account_id": "2349-6553-1241"
+    "account_id": "2349-6553-1241",
+    "bundle_vol_command": "sudo -n ec2-bundle-vol -k {{.KeyPath}} -u {{.AccountId}} -c {{.CertPath}} -r {{.Architecture}} -e {{.PrivatePath}}/* -d {{.Destination}} -p {{.Prefix}} --batch --no-filter"
   }],
 
   "provisioners": [
@@ -30,6 +31,11 @@
       "type": "shell",
       "script": "scripts/nginx.sh",
       "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E '{{ .Path }}'"
+    },
+    {
+      "type": "file",
+      "source": "config/cloudinit/cloud.cfg",
+      "destination": "/tmp/cloud.cfg"
     },
     {
       "type": "file",
@@ -49,6 +55,7 @@
     {
       "type": "shell",
       "inline": [
+        "sudo mv /tmp/cloud.cfg /etc/cloud/cloud.cfg",
         "sudo mv /tmp/nginx.conf /etc/nginx/nginx.conf",
         "sudo mv /tmp/default-host.conf /etc/nginx/default-host.conf",
         "sudo mv /tmp/default-host-index.html /var/www/index.html",
