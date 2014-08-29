@@ -44,7 +44,7 @@
     },
     {
       "type": "file",
-      "source": "config/elasticsearch/elasticsearch.init.conf",
+      "source": "config/elasticsearch/elasticsearch.yml",
       "destination": "/tmp/elasticsearch.yml"
     },
     {
@@ -54,7 +54,8 @@
         "sudo mv /tmp/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml",
         "sudo mv /tmp/elasticsearch.init.conf /etc/init.d/elasticsearch.init.conf",
         "sudo chown root:root /etc/elasticsearch/elasticsearch.yml",
-        "sudo chown root:root /etc/init.d/elasticsearch.init.conf"
+        "sudo chown root:root /etc/init.d/elasticsearch"
+        "sudo chmod 755 /etc/init.d/elasticsearch"
       ]
     }
   ]
