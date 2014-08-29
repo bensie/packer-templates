@@ -81,7 +81,7 @@ popd
 rm -rf /usr/local/rbenv/versions
 ln -nfs /opt/rubies /usr/local/rbenv/versions
 
-/opt/rubies/2.1.2/bin/gem install bundler --no-rdoc --no-ri -v 1.7.0
+/opt/rubies/2.1.2/bin/gem install bundler --no-rdoc --no-ri -v 1.7.2
 
 rbenv global 2.1.2
 rbenv rehash
