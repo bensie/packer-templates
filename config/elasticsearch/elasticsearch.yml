@@ -143,10 +143,12 @@ index.number_of_replicas: 2
 # Path to directory containing configuration (this file and logging.yml):
 #
 #path.conf: /path/to/conf
+path.conf: /etc/elasticsearch
 
 # Path to directory where to store index data allocated for this node.
 #
 #path.data: /path/to/data
+path.data: /mnt/elasticsearch/data
 #
 # Can optionally include more than one location, causing data to be striped across
 # the locations (a la RAID 0) on a file level, favouring locations with most free
@@ -157,10 +159,12 @@ index.number_of_replicas: 2
 # Path to temporary files:
 #
 #path.work: /path/to/work
+path.work: /mnt/tmp
 
 # Path to log files:
 #
 #path.logs: /path/to/logs
+path.logs: /mnt/elasticsearch/logs
 
 # Path to where plugins are installed:
 #
@@ -181,7 +185,7 @@ index.number_of_replicas: 2
 #
 # Set this property to true to lock the memory:
 #
-#bootstrap.mlockall: true
+bootstrap.mlockall: true
 
 # Make sure that the ES_MIN_MEM and ES_MAX_MEM environment variables are set
 # to the same value, and that the machine has enough memory to allocate

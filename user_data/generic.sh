@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+##############################################################
+# Begin generic commands run across all roles
+##############################################################
+
 # Copy SSH keys for authentication
 username=deploy
 
@@ -18,3 +22,7 @@ chmod 777 /mnt/tmp
 # Add apps dir in /mnt for application files
 mkdir /mnt/apps
 chown deploy:deploy /mnt/apps
+
+##############################################################
+# Begin role-specific commands
+##############################################################
