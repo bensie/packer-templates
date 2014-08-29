@@ -10,7 +10,7 @@
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-east-1",
     "source_ami": "ami-9ac11df2",
-    "instance_type": "c3.large",
+    "instance_type": "c3.xlarge",
     "ssh_username": "ubuntu",
     "ami_name": "elasticsearch.{{timestamp}}",
     "s3_bucket": "packer-templates",
@@ -38,9 +38,23 @@
       "destination": "/tmp/cloud.cfg"
     },
     {
+      "type": "file",
+      "source": "config/elasticsearch/elasticsearch.init.conf",
+      "destination": "/tmp/elasticsearch.init.conf"
+    },
+    {
+      "type": "file",
+      "source": "config/elasticsearch/elasticsearch.init.conf",
+      "destination": "/tmp/elasticsearch.yml"
+    },
+    {
       "type": "shell",
       "inline": [
-        "sudo mv /tmp/cloud.cfg /etc/cloud/cloud.cfg"
+        "sudo mv /tmp/cloud.cfg /etc/cloud/cloud.cfg",
+        "sudo mv /tmp/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml",
+        "sudo mv /tmp/elasticsearch.init.conf /etc/init.d/elasticsearch.init.conf",
+        "sudo chown root:root /etc/elasticsearch/elasticsearch.yml",
+        "sudo chown root:root /etc/init.d/elasticsearch.init.conf"
       ]
     }
   ]
