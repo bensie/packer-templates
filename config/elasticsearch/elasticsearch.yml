@@ -159,7 +159,7 @@ path.data: /mnt/elasticsearch/data
 # Path to temporary files:
 #
 #path.work: /path/to/work
-path.work: /mnt/tmp
+path.work: /mnt/tmp/elasticsearch
 
 # Path to log files:
 #
