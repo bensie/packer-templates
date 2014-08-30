@@ -26,3 +26,6 @@ chown deploy:deploy /mnt/apps
 ##############################################################
 # Begin role-specific commands
 ##############################################################
+
+# Add nginx dir in /mnt for application logs
+mkdir -p /mnt/nginx/log
