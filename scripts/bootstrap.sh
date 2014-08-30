@@ -91,3 +91,6 @@ adduser --disabled-password --gecos "" deploy
 
 # Add deploy user to sudo with no password
 echo "deploy ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# Allow overcommitting memory (forking with copy-on-write)
+echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf
