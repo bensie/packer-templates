@@ -39,6 +39,11 @@
     },
     {
       "type": "file",
+      "source": "config/redis/redis.conf",
+      "destination": "/tmp/redis.conf"
+    },
+    {
+      "type": "file",
       "source": "config/nginx/nginx.conf",
       "destination": "/tmp/nginx.conf"
     },
@@ -56,9 +61,11 @@
       "type": "shell",
       "inline": [
         "sudo mv /tmp/cloud.cfg /etc/cloud/cloud.cfg",
+        "sudo mv /tmp/redis.conf /etc/redis/redis.conf",
         "sudo mv /tmp/nginx.conf /etc/nginx/nginx.conf",
         "sudo mv /tmp/default-host.conf /etc/nginx/default-host.conf",
         "sudo mv /tmp/default-host-index.html /var/www/index.html",
+        "sudo chown root:root /etc/redis/redis.conf",
         "sudo chown root:root /etc/nginx/nginx.conf",
         "sudo chown root:root /etc/nginx/default-host.conf",
         "sudo chown root:root /var/www/index.html"
