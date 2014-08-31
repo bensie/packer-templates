@@ -42,7 +42,7 @@
       "inline": [
         "sudo mv /tmp/cloud.cfg /etc/cloud/cloud.cfg",
         "sudo mv /tmp/redis.conf /etc/redis/redis.conf",
-        "sudo chown root:root /etc/redis/redis.conf",
+        "sudo chown root:root /etc/redis/redis.conf"
       ]
     }
   ]
