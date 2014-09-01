@@ -41,6 +41,7 @@ apt-get install -y \
   mdadm \
   mysql-client-5.6 \
   nodejs \
+  ntp \
   openjdk-7-jdk \
   openssl \
   pkg-config \
