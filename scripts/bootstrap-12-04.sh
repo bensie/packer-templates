@@ -40,7 +40,7 @@ apt-get install -y \
   libmysqlclient-dev \
   mdadm \
   monit \
-  mysql-client-5.6 \
+  mysql-client-5.5 \
   nodejs \
   ntp \
   openjdk-7-jdk \
@@ -76,7 +76,7 @@ echo 'Defaults !secure_path' >> /etc/sudoers
 mkdir /opt/rubies
 
 pushd /opt/rubies
-  curl -O http://packages.machines.io/rubies/trusty/2.1.2.tgz
+  curl -O http://packages.machines.io/rubies/2.1.2.tgz
   tar zxf 2.1.2.tgz
 popd
 

@@ -44,6 +44,11 @@
     },
     {
       "type": "file",
+      "source": "config/monit/monitrc.conf",
+      "destination": "/tmp/monitrc.conf"
+    },
+    {
+      "type": "file",
       "source": "config/elasticsearch/elasticsearch.init.conf",
       "destination": "/tmp/elasticsearch.init.conf"
     },
@@ -59,6 +64,9 @@
         "sudo mv /tmp/redis.conf /etc/redis/redis.conf",
         "sudo mv /tmp/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml",
         "sudo mv /tmp/elasticsearch.init.conf /etc/init.d/elasticsearch",
+        "sudo mv /tmp/monitrc.conf /etc/monit/monitrc",
+        "sudo chmod 600 /etc/monit/monitrc",
+        "sudo chown root:root /etc/monit/monitrc",
         "sudo chown root:root /etc/redis/redis.conf",
         "sudo chown root:root /etc/elasticsearch/elasticsearch.yml",
         "sudo chown root:root /etc/init.d/elasticsearch",
