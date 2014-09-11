@@ -21,7 +21,6 @@ apt-get install -y \
   ec2-ami-tools \
   gdb \
   git-core \
-  imagemagick \
   libreadline6 \
   libreadline6-dev \
   libssl-dev \
@@ -52,6 +51,20 @@ apt-get install -y \
   zlib1g \
   zlib1g-dev
 
+# Install custom build of ImageMagick
+#
+# Preconfigured in /tmp with:
+# ./configure --prefix=/usr/local/imagemagick && make
+imagemagick_version="6.8.9-7"
+apt-get build-dep imagemagick -y
+pushd /tmp
+  curl -O http://packages.machines.io/imagemagick/14.04/ImageMagick-$imagemagick_version.tgz
+  tar zxvf ImageMagick-$imagemagick_version.tgz
+  cd ImageMagick-$imagemagick_version
+  make install
+  ln -s /usr/local/imagemagick/bin/* /usr/local/bin
+popd
+
 # Set timezone
 echo 'America/Los_Angeles' | tee /etc/timezone
 dpkg-reconfigure --frontend noninteractive tzdata
@@ -73,19 +86,21 @@ source /etc/profile
 echo 'Defaults !secure_path' >> /etc/sudoers
 
 # Fetch system ruby and install gems
+ruby_version = "2.1.2"
+bundler_version = "1.7.2"
 mkdir /opt/rubies
 
 pushd /opt/rubies
-  curl -O http://packages.machines.io/rubies/trusty/2.1.2.tgz
-  tar zxf 2.1.2.tgz
+  curl -O http://packages.machines.io/rubies/trusty/$ruby_version.tgz
+  tar zxf $ruby_version.tgz
 popd
 
 rm -rf /usr/local/rbenv/versions
 ln -nfs /opt/rubies /usr/local/rbenv/versions
 
-/opt/rubies/2.1.2/bin/gem install bundler --no-rdoc --no-ri -v 1.7.2
+/opt/rubies/$ruby_version/bin/gem install bundler --no-rdoc --no-ri -v $bundler_version
 
-rbenv global 2.1.2
+rbenv global $ruby_version
 rbenv rehash
 
 # Add deploy user
