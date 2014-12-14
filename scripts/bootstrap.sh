@@ -55,6 +55,12 @@ apt-get install -y \
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
 apt-get -y install ttf-mscorefonts-installer
 
+# Install PrinceXML
+pushd /tmp
+  curl -O http://www.princexml.com/download/prince_9.0-5_ubuntu14.04_amd64.deb
+  dpkg -i prince_9.0-5_ubuntu14.04_amd64.deb
+popd
+
 # Install custom build of ImageMagick
 #
 # Preconfigured in /tmp with:
