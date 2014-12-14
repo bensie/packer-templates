@@ -51,6 +51,10 @@ apt-get install -y \
   zlib1g \
   zlib1g-dev
 
+# Install Microsoft fonts, pre-accept the EULA
+echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
+apt-get -y install ttf-mscorefonts-installer
+
 # Install custom build of ImageMagick
 #
 # Preconfigured in /tmp with:
