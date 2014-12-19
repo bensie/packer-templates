@@ -2,7 +2,7 @@
 
 export DEBIAN_FRONTEND=noninteractive
 
-elasticsearch_version="1.4.1"
+elasticsearch_version="1.4.2"
 
 apt-get -y install openjdk-7-jre-headless
 cd /tmp
