@@ -21,6 +21,9 @@ apt-get install -y \
   ec2-ami-tools \
   gdb \
   git-core \
+  libffi-dev \
+  libgdbm3 \
+  libgdbm-dev \
   libreadline6 \
   libreadline6-dev \
   libssl-dev \
