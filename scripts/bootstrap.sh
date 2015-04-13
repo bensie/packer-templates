@@ -78,6 +78,11 @@ pushd /tmp
   ln -s /usr/local/imagemagick/bin/* /usr/local/bin
 popd
 
+# Install FFMpeg
+add-apt-repository ppa:mc3man/trusty-media -y
+apt-get update
+apt-get install ffmpeg -y
+
 # Set timezone
 echo 'America/Los_Angeles' | tee /etc/timezone
 dpkg-reconfigure --frontend noninteractive tzdata
