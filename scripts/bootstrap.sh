@@ -21,6 +21,9 @@ apt-get install -y \
   ec2-ami-tools \
   gdb \
   git-core \
+  libffi-dev \
+  libgdbm3 \
+  libgdbm-dev \
   libreadline6 \
   libreadline6-dev \
   libssl-dev \
@@ -96,8 +99,8 @@ source /etc/profile
 echo 'Defaults !secure_path' >> /etc/sudoers
 
 # Fetch system ruby and install gems
-ruby_version="2.1.5"
-bundler_version="1.8.5"
+ruby_version="2.2.1"
+bundler_version="1.9.2"
 mkdir /opt/rubies
 
 pushd /opt/rubies
