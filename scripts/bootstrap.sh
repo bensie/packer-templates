@@ -105,7 +105,7 @@ echo 'Defaults !secure_path' >> /etc/sudoers
 
 # Fetch system ruby and install gems
 ruby_version="2.2.2"
-bundler_version="1.9.3"
+bundler_version="1.10.4"
 mkdir /opt/rubies
 
 pushd /opt/rubies
