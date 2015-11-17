@@ -89,12 +89,12 @@ dpkg-reconfigure --frontend noninteractive tzdata
 
 # Install Rbenv
 git clone git://github.com/sstephenson/rbenv.git /usr/local/rbenv
-cd /usr/local/rbenv && git reset --hard 783618b89cb80b74f1daf03679081dd1233f49eb
+cd /usr/local/rbenv && git reset --hard 8f87f43e2286616cf3fb7b7bde7d924d7e1267a4
 
 # Install rbenv-vars
 mkdir -p /usr/local/rbenv/plugins
 git clone git://github.com/sstephenson/rbenv-vars.git /usr/local/rbenv/plugins/rbenv-vars
-cd /usr/local/rbenv/plugins/rbenv-vars && git reset --hard v1.2.0
+cd /usr/local/rbenv/plugins/rbenv-vars && git reset --hard 3ffc5ce8cee564d3d892223add9548132ae22f8a
 
 # Prepend Rbenv to the PATH for all users on interactive or non-interactive login
 sed -i '1i export RBENV_ROOT=/usr/local/rbenv\nexport PATH=$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PATH' /etc/profile
@@ -104,8 +104,8 @@ source /etc/profile
 echo 'Defaults !secure_path' >> /etc/sudoers
 
 # Fetch system ruby and install gems
-ruby_version="2.2.2"
-bundler_version="1.10.4"
+ruby_version="2.2.3"
+bundler_version="1.10.6"
 mkdir /opt/rubies
 
 pushd /opt/rubies
