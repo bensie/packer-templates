@@ -9,7 +9,7 @@
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-east-1",
-    "source_ami": "ami-a7205fcd",
+    "source_ami": "ami-0a7a3f60",
     "instance_type": "c3.large",
     "ssh_username": "ubuntu",
     "ami_name": "generic.{{timestamp}}",
@@ -44,14 +44,21 @@
       "destination": "/tmp/monitrc.conf"
     },
     {
+      "type": "file",
+      "source": "config/init/mounted-mnt.conf",
+      "destination": "/tmp/mounted-mnt.conf"
+    },
+    {
       "type": "shell",
       "inline": [
         "sudo mv /tmp/cloud.cfg /etc/cloud/cloud.cfg",
         "sudo mv /tmp/redis.conf /etc/redis/redis.conf",
         "sudo mv /tmp/monitrc.conf /etc/monit/monitrc",
+        "sudo mv /tmp/mounted-mnt.conf /etc/init/mounted-mnt.conf",
         "sudo chmod 600 /etc/monit/monitrc",
         "sudo chown root:root /etc/monit/monitrc",
-        "sudo chown root:root /etc/redis/redis.conf"
+        "sudo chown root:root /etc/redis/redis.conf",
+        "sudo chown root:root /etc/init/mounted-mnt.conf"
       ]
     }
   ]

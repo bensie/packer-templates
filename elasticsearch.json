@@ -9,7 +9,7 @@
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-east-1",
-    "source_ami": "ami-a7205fcd",
+    "source_ami": "ami-0a7a3f60",
     "instance_type": "c3.xlarge",
     "ssh_username": "ubuntu",
     "ami_name": "elasticsearch.{{timestamp}}",
@@ -50,6 +50,11 @@
     },
     {
       "type": "file",
+      "source": "config/init/mounted-mnt.conf",
+      "destination": "/tmp/mounted-mnt.conf"
+    },
+    {
+      "type": "file",
       "source": "config/elasticsearch/elasticsearch.init.conf",
       "destination": "/tmp/elasticsearch.init.conf"
     },
@@ -66,9 +71,11 @@
         "sudo mv /tmp/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml",
         "sudo mv /tmp/elasticsearch.init.conf /etc/init.d/elasticsearch",
         "sudo mv /tmp/monitrc.conf /etc/monit/monitrc",
+        "sudo mv /tmp/mounted-mnt.conf /etc/init/mounted-mnt.conf",
         "sudo chmod 600 /etc/monit/monitrc",
         "sudo chown root:root /etc/monit/monitrc",
         "sudo chown root:root /etc/redis/redis.conf",
+        "sudo chown root:root /etc/init/mounted-mnt.conf",
         "sudo chown root:root /etc/elasticsearch/elasticsearch.yml",
         "sudo chown root:root /etc/init.d/elasticsearch",
         "sudo chmod 755 /etc/init.d/elasticsearch"

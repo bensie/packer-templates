@@ -15,10 +15,6 @@ ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAs8S3Nj3JhcKd6XxNyN99e+TJdA2S1BM8++pKYeTQZzH6
 EOP
 ) > /home/$username/.ssh/authorized_keys
 
-# Add tmp dir in /mnt so it can grow big
-mkdir /mnt/tmp
-chmod 777 /mnt/tmp
-
 # Add apps dir in /mnt for application files
 mkdir /mnt/apps
 chown deploy:deploy /mnt/apps
