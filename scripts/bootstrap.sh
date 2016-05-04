@@ -40,10 +40,10 @@ apt-get install -y \
   libncurses5-dev \
   libtool \
   libmysqlclient-dev \
-  mdadm \
   monit \
   mysql-client-5.6 \
   nodejs \
+  npm \
   ntp \
   openjdk-7-jdk \
   openssl \
@@ -65,15 +65,14 @@ pushd /tmp
 popd
 
 # Install custom build of ImageMagick
-#
-# Preconfigured in /tmp with:
-# ./configure --prefix=/usr/local/imagemagick && make
-imagemagick_version="6.8.9-7"
+imagemagick_version="6.9.3-9"
 apt-get build-dep imagemagick -y
 pushd /tmp
-  curl -O http://packages.machines.io/imagemagick/14.04/ImageMagick-$imagemagick_version.tgz
-  tar zxvf ImageMagick-$imagemagick_version.tgz
+  curl -O http://www.imagemagick.org/download/ImageMagick-$imagemagick_version.tar.gz
+  tar zxf ImageMagick-$imagemagick_version.tar.gz
   cd ImageMagick-$imagemagick_version
+  ./configure --prefix=/usr/local/imagemagick
+  make
   make install
   ln -s /usr/local/imagemagick/bin/* /usr/local/bin
 popd
@@ -87,39 +86,41 @@ apt-get install ffmpeg -y
 echo 'America/Los_Angeles' | tee /etc/timezone
 dpkg-reconfigure --frontend noninteractive tzdata
 
-# Install Rbenv
-git clone git://github.com/sstephenson/rbenv.git /usr/local/rbenv
-cd /usr/local/rbenv && git reset --hard 8f87f43e2286616cf3fb7b7bde7d924d7e1267a4
+# Although we have a sudo recipe, we don't have access to chef without this
+echo 'Defaults !secure_path' >> /etc/sudoers
 
-# Install rbenv-vars
-mkdir -p /usr/local/rbenv/plugins
-git clone git://github.com/sstephenson/rbenv-vars.git /usr/local/rbenv/plugins/rbenv-vars
-cd /usr/local/rbenv/plugins/rbenv-vars && git reset --hard 3ffc5ce8cee564d3d892223add9548132ae22f8a
+# Install rbenv
+rbenv_install_path="/usr/local/rbenv"
+git clone git://github.com/rbenv/rbenv.git $rbenv_install_path
+cd $rbenv_install_path && git reset --hard 8f87f43e2286616cf3fb7b7bde7d924d7e1267a4
 
 # Prepend Rbenv to the PATH for all users on interactive or non-interactive login
 sed -i '1i export RBENV_ROOT=/usr/local/rbenv\nexport PATH=$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PATH' /etc/profile
 source /etc/profile
 
-# Although we have a sudo recipe, we don't have access to chef without this
-echo 'Defaults !secure_path' >> /etc/sudoers
-
-# Fetch system ruby and install gems
-ruby_version="2.2.3"
-bundler_version="1.11.2"
-mkdir /opt/rubies
-
-pushd /opt/rubies
-  curl -O http://packages.machines.io/rubies/trusty/$ruby_version.tgz
-  tar zxf $ruby_version.tgz
+# Install ruby-build
+pushd /tmp
+  git clone https://github.com/rbenv/ruby-build.git
+  cd ruby-build
+  ./install.sh
 popd
 
-rm -rf /usr/local/rbenv/versions
-ln -nfs /opt/rubies /usr/local/rbenv/versions
+# Install Ruby
+ruby_version="2.3.1"
+$rbenv_install_path/bin/rbenv install $ruby_version
 
-/opt/rubies/$ruby_version/bin/gem install bundler --no-rdoc --no-ri -v $bundler_version
+# Install Bundler
+bundler_version="1.12.1"
+$rbenv_install_path/versions/$ruby_version/bin/gem install bundler --no-rdoc --no-ri -v $bundler_version
 
-rbenv global $ruby_version
-rbenv rehash
+# Set global default Ruby version
+$rbenv_install_path/bin/rbenv global $ruby_version
+$rbenv_install_path/bin/rbenv rehash
+
+# Install rbenv-vars
+mkdir -p $rbenv_install_path/plugins
+git clone git://github.com/rbenv/rbenv-vars.git $rbenv_install_path/plugins/rbenv-vars
+cd $rbenv_install_path/plugins/rbenv-vars && git reset --hard 3ffc5ce8cee564d3d892223add9548132ae22f8a
 
 # Add deploy user
 adduser --disabled-password --gecos "" deploy
