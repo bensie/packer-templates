@@ -5,71 +5,72 @@
   },
 
   "builders": [{
-    "type": "amazon-instance",
-    "access_key": "{{user `aws_access_key`}}",
-    "secret_key": "{{user `aws_secret_key`}}",
-    "region": "us-east-1",
-    "source_ami": "ami-d25e48b8",
-    "instance_type": "c3.large",
-    "ssh_username": "ubuntu",
-    "ami_name": "web.{{timestamp}}",
-    "s3_bucket": "packer-templates",
-    "x509_cert_path": "/Users/james/Dropbox/Packer-Certificates/packer.crt",
-    "x509_key_path": "/Users/james/Dropbox/Packer-Certificates/packer.key",
-    "x509_upload_path": "/tmp",
-    "account_id": "2349-6553-1241",
-    "bundle_vol_command": "sudo -n ec2-bundle-vol -k {{.KeyPath}} -u {{.AccountId}} -c {{.CertPath}} -r {{.Architecture}} -e {{.PrivatePath}}/* -d {{.Destination}} -p {{.Prefix}} --batch --no-filter",
-    "bundle_upload_command": "sudo -n ec2-upload-bundle -b {{.BucketName}} -m {{.ManifestPath}} -a {{.AccessKey}} -s {{.SecretKey}} -d {{.BundleDirectory}} --batch --retry"
+    "type":                    "amazon-instance",
+    "access_key":              "{{user `aws_access_key`}}",
+    "secret_key":              "{{user `aws_secret_key`}}",
+    "region":                  "us-east-1",
+    "source_ami":              "ami-9c5046f6",
+    "ami_virtualization_type": "paravirtual",
+    "instance_type":           "c3.large",
+    "ssh_username":            "ubuntu",
+    "ami_name":                "web.{{timestamp}}",
+    "s3_bucket":               "packer-templates",
+    "x509_cert_path":          "/Users/james/Dropbox/Packer-Certificates/packer.crt",
+    "x509_key_path":           "/Users/james/Dropbox/Packer-Certificates/packer.key",
+    "x509_upload_path":        "/tmp",
+    "account_id":              "2349-6553-1241",
+    "bundle_vol_command":      "sudo -n ec2-bundle-vol -k {{.KeyPath}} -u {{.AccountId}} -c {{.CertPath}} -r {{.Architecture}} -e {{.PrivatePath}}/* -d {{.Destination}} -p {{.Prefix}} --batch --no-filter",
+    "bundle_upload_command":   "sudo -n ec2-upload-bundle -b {{.BucketName}} -m {{.ManifestPath}} -a {{.AccessKey}} -s {{.SecretKey}} -d {{.BundleDirectory}} --batch --retry"
   }],
 
   "provisioners": [
     {
-      "type": "shell",
-      "script": "scripts/bootstrap.sh",
+      "type":            "shell",
+      "script":          "scripts/bootstrap.sh",
       "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E '{{ .Path }}'"
     },
     {
-      "type": "shell",
-      "script": "scripts/nginx.sh",
+      "type":            "shell",
+      "script":          "scripts/nginx.sh",
       "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E '{{ .Path }}'"
     },
     {
-      "type": "file",
-      "source": "config/cloudinit/cloud.cfg",
+      "type":        "file",
+      "source":      "config/cloudinit/cloud.cfg",
       "destination": "/tmp/cloud.cfg"
     },
     {
-      "type": "file",
-      "source": "config/redis/redis.conf",
+      "type":        "file",
+      "source":      "config/redis/redis.conf",
       "destination": "/tmp/redis.conf"
     },
     {
-      "type": "file",
-      "source": "config/monit/monitrc.conf",
+      "type":        "file",
+      "source":      "config/monit/monitrc.conf",
       "destination": "/tmp/monitrc.conf"
     },
     {
-      "type": "file",
-      "source": "config/init/mounted-mnt.conf",
+      "type":        "file",
+      "source":      "config/init/mounted-mnt.conf",
       "destination": "/tmp/mounted-mnt.conf"
     },
     {
-      "type": "file",
-      "source": "config/nginx/nginx.conf",
+      "type":        "file",
+      "source":      "config/nginx/nginx.conf",
       "destination": "/tmp/nginx.conf"
     },
     {
-      "type": "file",
-      "source": "config/nginx/default-host.conf",
+      "type":        "file",
+      "source":      "config/nginx/default-host.conf",
       "destination": "/tmp/default-host.conf"
     },
     {
-      "type": "file",
-      "source": "config/nginx/default-host-index.html",
+      "type":        "file",
+      "source":      "config/nginx/default-host-index.html",
       "destination": "/tmp/default-host-index.html"
     },
     {
-      "type": "shell",
+      "type":   "shell",
       "inline": [
         "sudo mv /tmp/cloud.cfg /etc/cloud/cloud.cfg",
         "sudo mv /tmp/redis.conf /etc/redis/redis.conf",

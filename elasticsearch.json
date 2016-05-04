@@ -5,21 +5,22 @@
   },
 
   "builders": [{
-    "type": "amazon-instance",
-    "access_key": "{{user `aws_access_key`}}",
-    "secret_key": "{{user `aws_secret_key`}}",
-    "region": "us-east-1",
-    "source_ami": "ami-d25e48b8",
-    "instance_type": "c3.large",
-    "ssh_username": "ubuntu",
-    "ami_name": "elasticsearch.{{timestamp}}",
-    "s3_bucket": "packer-templates",
-    "x509_cert_path": "/Users/james/Dropbox/Packer-Certificates/packer.crt",
-    "x509_key_path": "/Users/james/Dropbox/Packer-Certificates/packer.key",
-    "x509_upload_path": "/tmp",
-    "account_id": "2349-6553-1241",
-    "bundle_vol_command": "sudo -n ec2-bundle-vol -k {{.KeyPath}} -u {{.AccountId}} -c {{.CertPath}} -r {{.Architecture}} -e {{.PrivatePath}}/* -d {{.Destination}} -p {{.Prefix}} --batch --no-filter",
-    "bundle_upload_command": "sudo -n ec2-upload-bundle -b {{.BucketName}} -m {{.ManifestPath}} -a {{.AccessKey}} -s {{.SecretKey}} -d {{.BundleDirectory}} --batch --retry"
+    "type":                    "amazon-instance",
+    "access_key":              "{{user `aws_access_key`}}",
+    "secret_key":              "{{user `aws_secret_key`}}",
+    "region":                  "us-east-1",
+    "source_ami":              "ami-9c5046f6",
+    "ami_virtualization_type": "paravirtual",
+    "instance_type":           "c3.large",
+    "ssh_username":            "ubuntu",
+    "ami_name":                "elasticsearch.{{timestamp}}",
+    "s3_bucket":               "packer-templates",
+    "x509_cert_path":          "/Users/james/Dropbox/Packer-Certificates/packer.crt",
+    "x509_key_path":           "/Users/james/Dropbox/Packer-Certificates/packer.key",
+    "x509_upload_path":        "/tmp",
+    "account_id":              "2349-6553-1241",
+    "bundle_vol_command":      "sudo -n ec2-bundle-vol -k {{.KeyPath}} -u {{.AccountId}} -c {{.CertPath}} -r {{.Architecture}} -e {{.PrivatePath}}/* -d {{.Destination}} -p {{.Prefix}} --batch --no-filter",
+    "bundle_upload_command":   "sudo -n ec2-upload-bundle -b {{.BucketName}} -m {{.ManifestPath}} -a {{.AccessKey}} -s {{.SecretKey}} -d {{.BundleDirectory}} --batch --retry"
   }],
 
   "provisioners": [
