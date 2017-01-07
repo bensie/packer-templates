@@ -65,7 +65,7 @@ pushd /tmp
 popd
 
 # Install custom build of ImageMagick
-imagemagick_version="6.9.3-9"
+imagemagick_version="6.9.7-2"
 apt-get build-dep imagemagick -y
 pushd /tmp
   curl -O http://www.imagemagick.org/download/ImageMagick-$imagemagick_version.tar.gz
@@ -110,7 +110,7 @@ ruby_version="2.3.1"
 $rbenv_install_path/bin/rbenv install $ruby_version
 
 # Install Bundler
-bundler_version="1.12.1"
+bundler_version="1.13.7"
 $rbenv_install_path/versions/$ruby_version/bin/gem install bundler --no-rdoc --no-ri -v $bundler_version
 
 # Set global default Ruby version
